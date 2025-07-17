@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Backend_Cumulative_01.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.Reflection.Metadata.Ecma335;
@@ -9,6 +10,9 @@ namespace Backend_Cumulative_01.Controllers
     [ApiController]
     public class TeacherAPIController : ControllerBase
     {
+        // get access to the blog object
+        private SchoolDbContext School = new SchoolDbContext();
+
         /// <summary>
         /// This method should connect to the database and extract the teachers' names
         /// </summary>
@@ -25,7 +29,7 @@ namespace Backend_Cumulative_01.Controllers
             List<string> TeacherNames = new List<string>();
 
             // Open the connection to the database
-            MySqlConnection Connection =
+            MySqlConnection Connection = School.AccessDatabase();
 
             // Write a query - "select * from schooldb"
 

@@ -8,7 +8,7 @@ namespace Backend_Cumulative_01.Models
         //Only the SchoolDbContext class can use them.
         private static string User { get { return "root"; } }
         private static string Password { get { return "root"; } }
-        private static string Database { get { return "blog"; } }
+        private static string Database { get { return "school"; } }
         private static string Server { get { return "localhost"; } }
         private static string Port { get { return "3306"; } }
 
@@ -30,7 +30,7 @@ namespace Backend_Cumulative_01.Models
         }
         //This is the method we actually use to get the database!
         /// <summary>
-        /// Returns a connection to the blog database.
+        /// Returns a connection to the school database.
         /// </summary>
         /// <example>
         /// private SchoolDbContext School = new SchoolDbContext();
@@ -40,7 +40,7 @@ namespace Backend_Cumulative_01.Models
         public MySqlConnection AccessDatabase()
         {
             //We are instantiating the MySqlConnection Class to create an object
-            //the object is a specific connection to our blog database on port 3307 of localhost
+            //the object is a specific connection to our blog database on port 3306 of localhost
             return new MySqlConnection(ConnectionString);
         }
     }
