@@ -28,16 +28,32 @@ namespace Backend_Cumulative_01.Controllers
             // Creates an empty list of teacher names
             List<string> TeacherNames = new List<string>();
 
-            // Open the connection to the database
+            // Create the connection to the database
             MySqlConnection Connection = School.AccessDatabase();
 
+            // Open the connection to the database
+            Connection.Open();
+
             // Write a query - "select * from schooldb"
+            string query = "select * from teachers";
 
-            // "run" the query against the database
+            // create a command
+            MySqlCommand Command = Connection.CreateCommand();
 
+            // set the command text to the query
+            Command.CommandText = query;
+
+            // run the command against the database
             // get the response from the database as a "Result Set"
+            MySqlDataReader ResultSet = Command.ExecuteReader();
 
             // loop through the results one at a time
+            while(ResultSet.Read())
+            {
+                // add the first names one at a time
+                string TeacherName = ResultSet["teacherfname"].ToString();
+                TeacherNames.Add(TeacherName);
+            }
 
             // add the teachers one at a time
 

@@ -7,8 +7,8 @@ namespace Backend_Cumulative_01.Models
         //These are readonly "secret" properties. 
         //Only the SchoolDbContext class can use them.
         private static string User { get { return "root"; } }
-        private static string Password { get { return "root"; } }
-        private static string Database { get { return "school"; } }
+        private static string Password { get { return ""; } }
+        private static string Database { get { return "schooldb"; } }
         private static string Server { get { return "localhost"; } }
         private static string Port { get { return "3306"; } }
 
