@@ -36,7 +36,7 @@ namespace Backend_Cumulative_01.Controllers
                 // Open the connection to the database
                 Connection.Open();
 
-                // Write a query - "select * from schooldb"
+                // Write a query - "select * from teachers"
                 string query = "select * from teachers";
 
                 // create a command
@@ -64,7 +64,7 @@ namespace Backend_Cumulative_01.Controllers
                 }
             }
 
-            //return the teachers' names
+            //return the details of all the teachers
             return TeacherNames;
         }
     }
