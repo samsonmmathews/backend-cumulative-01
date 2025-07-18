@@ -2,7 +2,7 @@
 {
     public class Teacher
     {
-        // A Teacher ID primary key 
+        // A Teacher ID (primary key)
         public int TeacherId { get; set; }
         // the first name of the teacher
         public string TeacherFname { get; set; }
