@@ -69,5 +69,65 @@ namespace Backend_Cumulative_01.Controllers
             //return the details of all the teachers
             return TeacherNames;
         }
+
+        /// <summary>
+        /// This method should connect to the database and extract the details of a specific teacher
+        /// </summary>
+        /// <returns>
+        /// Information on a specific teacher
+        /// </returns>
+        /// <example>
+        /// GET : api/Teacher/SpecificTeacher/1 -> [{"teacherId":1,"teacherFname":"Alexander",
+        /// "teacherLname":"Bennett","employeeNumber":"T378",
+        /// "hireDate":"2016-08-05T00:00:00","salary":55.30}]
+        /// </example>
+        [HttpGet(template: "SpecificTeacher/{inputId}")]
+        public List<Teacher> SpecificTeacher(int inputId)
+        {
+            // Creates an empty list to store the teacher info
+            List<Teacher> SpecificTeacherInfo = new List<Teacher>();
+
+            // Create the connection to the database
+            using (MySqlConnection Connection = _context.AccessDatabase())
+            {
+
+                // Open the connection to the database
+                Connection.Open();
+
+                // Write a query - $"select * from teachers where teacherid = {inputId}"
+                string query = $"select * from teachers where teacherid = {inputId}";
+
+                // create a command
+                MySqlCommand Command = Connection.CreateCommand();
+
+                // set the command text to the query
+                Command.CommandText = query;
+
+                // run the command against the database
+                // get the response from the database as a "Result Set"
+                using (MySqlDataReader ResultSet = Command.ExecuteReader())
+                {
+                    // error handling code - checks if the teacher id exists
+                    if(ResultSet.Read())
+                    {
+                        Teacher TeacherData = new Teacher();
+                        TeacherData.TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
+                        TeacherData.TeacherFname = ResultSet["teacherfname"].ToString();
+                        TeacherData.TeacherLname = ResultSet["teacherlname"].ToString();
+                        TeacherData.EmployeeNumber = ResultSet["employeenumber"].ToString();
+                        TeacherData.HireDate = DateTime.Parse(ResultSet["hiredate"].ToString());
+                        TeacherData.Salary = decimal.Parse(ResultSet["salary"].ToString());
+                        SpecificTeacherInfo.Add(TeacherData);
+                    }
+                    //else
+                    //{
+                    //    return "The teacher id does not exist";
+                    //}
+                }
+            }
+
+            //return the details of all the teachers
+            return SpecificTeacherInfo;
+        }
     }
 }
