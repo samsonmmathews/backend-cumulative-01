@@ -1,7 +1,15 @@
+using Backend_Cumulative_01.Controllers;
+using Backend_Cumulative_01.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Database
+builder.Services.AddScoped<SchoolDbContext>();
+
+builder.Services.AddScoped<TeacherAPIController>();
 
 var app = builder.Build();
 

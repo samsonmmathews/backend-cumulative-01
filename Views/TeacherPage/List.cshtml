@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Backend_Cumulative_01.Models.Teacher>
+
+<h2>I want to list teachers here</h2>
+
+@foreach (Teacher teacher in Model)
+{
+    <div>
+        <a href="/TeacherPage/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a>
+    </div>
+}
