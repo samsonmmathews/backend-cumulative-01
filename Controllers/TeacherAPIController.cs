@@ -21,7 +21,9 @@ namespace Backend_Cumulative_01.Controllers
         /// Information on all teachers
         /// </returns>
         /// <example>
-        /// 
+        /// GET : api/Teacher/ListTeachers -> [{"teacherId":1,"teacherFname":"Alexander",
+        /// "teacherLname":"Bennett","employeeNumber":"T378",
+        /// "hireDate":"2016-08-05T00:00:00","salary":55.30}]
         /// </example>
         [HttpGet(template: "ListTeachers")]
         public List<Teacher> ListTeachers()
