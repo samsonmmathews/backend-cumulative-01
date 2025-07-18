@@ -77,15 +77,22 @@ namespace Backend_Cumulative_01.Controllers
         /// Information on a specific teacher
         /// </returns>
         /// <example>
-        /// GET : api/Teacher/SpecificTeacher/1 -> [{"teacherId":1,"teacherFname":"Alexander",
-        /// "teacherLname":"Bennett","employeeNumber":"T378",
-        /// "hireDate":"2016-08-05T00:00:00","salary":55.30}]
+        /// GET : api/Teacher/SpecificTeacher/7 -> {"teacherId":7,"teacherFname":"Shannon","teacherLname":"Barton",
+        /// "employeeNumber":"T397","hireDate":"2013-08-04T00:00:00","salary":64.70}
+        /// </example>
+        /// <example>
+        /// GET : api/Teacher/SpecificTeacher/24 -> {"teacherId":0,"teacherFname":null,"teacherLname":null,
+        /// "employeeNumber":null,"hireDate":"0001-01-01T00:00:00","salary":0}
+        /// </example>
+        /// GET : api/Teacher/SpecificTeacher/hey -> {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1",
+        /// "title":"One or more validation errors occurred.","status":400,"errors":{"inputId":["The value 'hey' is not valid."]},
+        /// "traceId":"00-a42745faed81e05c6381e7d9c8e0987c-38b6352bac25c7e2-00"}
         /// </example>
         [HttpGet(template: "SpecificTeacher/{inputId}")]
-        public List<Teacher> SpecificTeacher(int inputId)
+        public Teacher SpecificTeacher(int inputId)
         {
             // Creates an empty list to store the teacher info
-            List<Teacher> SpecificTeacherInfo = new List<Teacher>();
+            Teacher SpecificTeacherInfo = new Teacher();
 
             // Create the connection to the database
             using (MySqlConnection Connection = _context.AccessDatabase())
@@ -110,23 +117,16 @@ namespace Backend_Cumulative_01.Controllers
                     // error handling code - checks if the teacher id exists
                     if(ResultSet.Read())
                     {
-                        Teacher TeacherData = new Teacher();
-                        TeacherData.TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                        TeacherData.TeacherFname = ResultSet["teacherfname"].ToString();
-                        TeacherData.TeacherLname = ResultSet["teacherlname"].ToString();
-                        TeacherData.EmployeeNumber = ResultSet["employeenumber"].ToString();
-                        TeacherData.HireDate = DateTime.Parse(ResultSet["hiredate"].ToString());
-                        TeacherData.Salary = decimal.Parse(ResultSet["salary"].ToString());
-                        SpecificTeacherInfo.Add(TeacherData);
+                        SpecificTeacherInfo.TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
+                        SpecificTeacherInfo.TeacherFname = ResultSet["teacherfname"].ToString();
+                        SpecificTeacherInfo.TeacherLname = ResultSet["teacherlname"].ToString();
+                        SpecificTeacherInfo.EmployeeNumber = ResultSet["employeenumber"].ToString();
+                        SpecificTeacherInfo.HireDate = DateTime.Parse(ResultSet["hiredate"].ToString());
+                        SpecificTeacherInfo.Salary = decimal.Parse(ResultSet["salary"].ToString());
                     }
-                    //else
-                    //{
-                    //    return "The teacher id does not exist";
-                    //}
                 }
             }
-
-            //return the details of all the teachers
+            //return the details of the teacher
             return SpecificTeacherInfo;
         }
     }
