@@ -22,6 +22,7 @@ namespace Backend_Cumulative_01.Controllers
         [HttpGet]
         public IActionResult List()
         {
+            // Returns the list of all teachers
             List<Teacher> Teachers = _api.ListTeachers();
 
             // Mock testing - three dummy teachers' details
@@ -58,7 +59,7 @@ namespace Backend_Cumulative_01.Controllers
         [HttpGet]
         public IActionResult Show(int id)
         {
-            // get the article with the input id
+            // Get the teacher with the teacher id
 
             Teacher SelectedTeacher = _api.SpecificTeacher(id);
 
