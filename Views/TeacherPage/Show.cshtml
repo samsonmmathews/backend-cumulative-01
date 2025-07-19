@@ -1,7 +1,10 @@
 ﻿@model Backend_Cumulative_01.Models.Teacher
 
 <h2>@Model.TeacherFname @Model.TeacherLname</h2>
-<p><strong>Teacher ID: </strong>@Model.TeacherId</p>
-<p><strong>Employee Number: </strong>@Model.EmployeeNumber</p>
-<p><strong>Hire Date: </strong>@Model.HireDate</p>
-<p><strong>Salary: </strong>@Model.Salary</p>
+@* Added styles *@
+<div style="background: #ADD8E6;">
+    <p><strong>Teacher ID: </strong>@Model.TeacherId</p>
+    <p><strong>Employee Number: </strong>@Model.EmployeeNumber</p>
+    <p><strong>Hire Date: </strong>@Model.HireDate</p>
+    <p><strong>Salary: </strong>@Model.Salary</p>
+</div>
