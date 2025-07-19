@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<Backend_Cumulative_01.Models.Teacher>
 
-<h1>List of all the teachers in the database</h1>
+<h1>Teachers</h1>
+
+<form method="GET" action="/TeacherPage/List">
+    <div>
+        <input type="text" name="SearchKey" /><input type="submit" value="Search" />
+    </div>
+</form>
 
 @foreach (Teacher teacher in Model)
 {
