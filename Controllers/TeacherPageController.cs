@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Backend_Cumulative_01.Models;
+using System.Diagnostics;
 
 namespace Backend_Cumulative_01.Controllers
 {
@@ -14,16 +15,18 @@ namespace Backend_Cumulative_01.Controllers
             _api = api;
         }
 
-        // GET: TeacherPage/List ->
+        // GET: TeacherPage/List?SearchKey={SearchKey} ->
         // Response Headers:
         // Content-Type: application/xml
         // Content: html document with article as links
-        // A webpage showing all teachers as links
+        // A webpage showing all teachers in the database
+        // matching the optional search key input
         [HttpGet]
-        public IActionResult List()
+        public IActionResult List(string SearchKey)
         {
+            Debug.WriteLine("The search key is " + SearchKey);
             // Returns the list of all teachers
-            List<Teacher> Teachers = _api.ListTeachers();
+            List<Teacher> Teachers = _api.ListTeachers(SearchKey);
 
             // Mock testing - three dummy teachers' details
 

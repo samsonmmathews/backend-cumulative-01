@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.IO.Pipelines;
 using System.Reflection.Metadata.Ecma335;
+using System.Diagnostics;
 
 namespace Backend_Cumulative_01.Controllers
 {
@@ -20,14 +21,22 @@ namespace Backend_Cumulative_01.Controllers
         /// <returns>
         /// Information on all teachers
         /// </returns>
+        /// <param name="SearchKey">The search key to search for
+        /// teachers by their name</param>
         /// <example>
-        /// GET : api/Teacher/ListTeachers -> [{"teacherId":1,"teacherFname":"Alexander",
+        /// GET : api/TeacherAPI/ListTeachers -> [{"teacherId":1,"teacherFname":"Alexander",
+        /// "teacherLname":"Bennett","employeeNumber":"T378",
+        /// "hireDate":"2016-08-05T00:00:00","salary":55.30}]
+        /// </example>
+        /// <example>
+        /// GET : api/TeacherAPI/ListTeachers?SearchKey=Alexander -> [{"teacherId":1,"teacherFname":"Alexander",
         /// "teacherLname":"Bennett","employeeNumber":"T378",
         /// "hireDate":"2016-08-05T00:00:00","salary":55.30}]
         /// </example>
         [HttpGet(template: "ListTeachers")]
-        public List<Teacher> ListTeachers()
+        public List<Teacher> ListTeachers(string? SearchKey)
         {
+            Debug.WriteLine("API Received search key " + SearchKey);
             // Creates an empty list of teacher names
             List<Teacher> TeacherNames = new List<Teacher>();
 
@@ -38,14 +47,16 @@ namespace Backend_Cumulative_01.Controllers
                 // Open the connection to the database
                 Connection.Open();
 
-                // Write a query - "select * from teachers"
-                string query = "select * from teachers";
-
                 // create a command
                 MySqlCommand Command = Connection.CreateCommand();
 
+                // Write a query - "select * from teachers"
+                string query = "SELECT teachers.* from teachers where teachers.teacherfname LIKE @key OR teachers.teacherlname LIKE @key";
+
                 // set the command text to the query
                 Command.CommandText = query;
+                Command.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+                Command.Prepare(); 
 
                 // run the command against the database
                 // get the response from the database as a "Result Set"
@@ -97,15 +108,16 @@ namespace Backend_Cumulative_01.Controllers
             // Create the connection to the database
             using (MySqlConnection Connection = _context.AccessDatabase())
             {
+                // Write a query - $"select * from teachers where teacherid = {inputId}"
+                string query = $"select * from teachers where teacherid = @id";
 
                 // Open the connection to the database
                 Connection.Open();
 
-                // Write a query - $"select * from teachers where teacherid = {inputId}"
-                string query = $"select * from teachers where teacherid = {inputId}";
-
                 // create a command
                 MySqlCommand Command = Connection.CreateCommand();
+
+                Command.Parameters.AddWithValue("@id", inputId);
 
                 // set the command text to the query
                 Command.CommandText = query;
