@@ -141,5 +141,50 @@ namespace Backend_Cumulative_01.Controllers
             //return the details of the teacher
             return SpecificTeacherInfo;
         }
+
+        /// <summary>
+        /// This method receives information on teacher and adds
+        /// a teacher to the database
+        /// </summary>
+        /// <example>
+        /// POST: api/Teacher/AddTeacher
+        /// HEADERS
+        /// Content-Type: application/json
+        /// FORM DATA / REQUEST BODY / POST DATA:
+        /// {"teacherId":7,"teacherFname":"Shannon","teacherLname":"Barton",
+        /// "employeeNumber":"T397","hireDate":"2013-08-04T00:00:00","salary":64.70}
+        /// ->
+        /// T100
+        /// </example>
+        /// <returns>
+        /// Returns the teacher ID that was inserted into the database, -1 if there is an error
+        /// </returns>
+        [HttpPost(template:"AddTeacher")]
+        public int AddTeacher([FromBody]Teacher NewTeacher)
+        {
+            Debug.WriteLine($"Teacher TeacherFname {NewTeacher.TeacherFname}");
+            Debug.WriteLine($"Teacher TeacherLname {NewTeacher.TeacherLname}");
+            // GOAL: 
+
+            string query = "insert into teachers (teacherid, teacherfname, teacherlname, employeenumber, hiredate, salary) values (0, @TeacherFname, @TeacherLname, @EmployeeNumber, CURRENT_DATE(), @Salary)";
+
+            int TeacherId = -1;
+            using (MySqlConnection Conn = _context.AccessDatabase())
+            {
+                Conn.Open();
+
+                MySqlCommand Command = Conn.CreateCommand();
+                Command.CommandText = query;
+                Command.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFname);
+                Command.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLname);
+                Command.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+                Command.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
+
+                Command.ExecuteNonQuery();
+                TeacherId = Convert.ToInt32(Command.LastInsertedId);
+            }
+            return TeacherId;
+        }
+
     }
 }
