@@ -188,5 +188,35 @@ namespace Backend_Cumulative_01.Controllers
             return TeacherId;
         }
 
+        /// <summary>
+        /// This method receives the title ID, deletes the teacher matching that ID in the database
+        /// </summary>
+        /// <param name="id">The primary key of the teacher ID</param>
+        /// <returns>
+        /// The number of rows affected by the delete
+        /// </returns>
+        /// <example>
+        /// DELETE api/Teacher/DeleteTeacher/100 -> 1
+        /// </example>
+        [HttpDelete(template:"DeleteTeacher/{id}")]
+        public int DeleteTeacher(int id)
+        {
+            string query = "delete from teachers where teacherid=@id";
+
+            int RowsAffected = 0;
+
+            using (MySqlConnection Conn = _context.AccessDatabase())
+            {
+                // Open the connection to the database
+                Conn.Open();
+
+                MySqlCommand Command = Conn.CreateCommand();
+                Command.CommandText = query;
+                Command.Parameters.AddWithValue("@id",id);
+                RowsAffected = Command.ExecuteNonQuery();
+            }
+
+            return RowsAffected;
+        }
     }
 }

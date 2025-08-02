@@ -111,14 +111,23 @@ namespace Backend_Cumulative_01.Controllers
             return RedirectToAction("Show", new {id = TeacherId });
         }
 
-        // GET : /DeleteConfirm/{id} -> A webpage that asks the user
+        // GET : /TeacherPage/DeleteConfirm/{id} -> A webpage that asks the user
         // if they want to delete this article
 
         public IActionResult DeleteConfirm(int id)
         {
+            Teacher SelectedTeacher = _api.SpecificTeacher(id);
             //Directs to /Views/TeacherPage/DeleteConfirm.cshtml
-            return View();
+            return View(SelectedTeacher);
         }
 
+        // POST: /TeacherPage/Delete/{id} -> Deletes the teacher and returns to the List.cshtml
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _api.DeleteTeacher(id);
+            // Directs to /TeacherPage/List.cshtml
+            return RedirectToAction("List");
+        }
     }
 }

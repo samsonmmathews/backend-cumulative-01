@@ -1,0 +1,9 @@
+﻿@model Backend_Cumulative_01.Models.Teacher
+
+<h2>Are you sure you want to delete the details of this teacher?</h2>
+<p>Name: @Model.TeacherFname @Model.TeacherLname</p>
+
+<a href="/TeacherPage/Show/@Model.TeacherId">No, Go back</a>
+<form action="/TeacherPage/Delete/@Model.TeacherId" method="POST">
+    <input type="submit" value="Yes, Delete" />
+</form>
