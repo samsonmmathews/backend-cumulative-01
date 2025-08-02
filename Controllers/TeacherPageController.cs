@@ -77,6 +77,48 @@ namespace Backend_Cumulative_01.Controllers
             // Directs to /Views/TeacherPage/Show.cshtml
 
             return View(SelectedTeacher);
+        }   
+
+        // GET: TeacherPage/New -> A webpage that asks the user for the new teacher information
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View();
         }
+
+        // POST: TeacherPage/Create
+        // Headers:
+        // application/x-www-form-unlocked
+        // Request Body: &TeacherFname={TeacherFname}&TeacherLname={TeacherLname}
+        // ->Adds teacher and directs to List.cshtml
+        [HttpPost]
+        public IActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime HireDate, decimal Salary)
+        {
+            Debug.WriteLine("Form submitted");
+            Debug.WriteLine($"{TeacherFname} {TeacherLname} {EmployeeNumber} {HireDate} {Salary}");
+            // Directs to /TeacherPage/List.cshtml
+
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherFname = TeacherFname;
+            NewTeacher.TeacherLname = TeacherLname;
+            NewTeacher.EmployeeNumber = EmployeeNumber;
+            NewTeacher.HireDate = HireDate;
+            NewTeacher.Salary = Salary;
+
+            int TeacherId = _api.AddTeacher(NewTeacher);
+
+            // Directs to /TeacherPage/Show/{id}
+            return RedirectToAction("Show", new {id = TeacherId });
+        }
+
+        // GET : /DeleteConfirm/{id} -> A webpage that asks the user
+        // if they want to delete this article
+
+        public IActionResult DeleteConfirm(int id)
+        {
+            //Directs to /Views/TeacherPage/DeleteConfirm.cshtml
+            return View();
+        }
+
     }
 }

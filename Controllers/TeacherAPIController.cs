@@ -162,15 +162,17 @@ namespace Backend_Cumulative_01.Controllers
         [HttpPost(template:"AddTeacher")]
         public int AddTeacher([FromBody]Teacher NewTeacher)
         {
+            // For testing
             Debug.WriteLine($"Teacher TeacherFname {NewTeacher.TeacherFname}");
             Debug.WriteLine($"Teacher TeacherLname {NewTeacher.TeacherLname}");
-            // GOAL: 
-
+            
+            // Write a query
             string query = "insert into teachers (teacherid, teacherfname, teacherlname, employeenumber, hiredate, salary) values (0, @TeacherFname, @TeacherLname, @EmployeeNumber, CURRENT_DATE(), @Salary)";
 
             int TeacherId = -1;
             using (MySqlConnection Conn = _context.AccessDatabase())
             {
+                // Open the connection to the database
                 Conn.Open();
 
                 MySqlCommand Command = Conn.CreateCommand();

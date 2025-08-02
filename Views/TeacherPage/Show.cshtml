@@ -1,6 +1,9 @@
 ﻿@model Backend_Cumulative_01.Models.Teacher
 
 <h2>@Model.TeacherFname @Model.TeacherLname</h2>
+
+<a href="/TeacherPage/DeleteConfirm/@Model.TeacherId">Delete</a>
+
 @* Added styles *@
 <div style="background: #ADD8E6;">
     <p><strong>Teacher ID: </strong>@Model.TeacherId</p>
