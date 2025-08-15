@@ -218,5 +218,42 @@ namespace Backend_Cumulative_01.Controllers
 
             return RowsAffected;
         }
+
+        /// <summary>
+        /// Receives teacher information and updates the corresponding teacher
+        /// </summary>
+        /// <param name="id">The primary key of the teacher</param>
+        /// <returns>
+        /// The teacher object from the database after the update
+        /// </returns>
+        /// <example>
+        /// POST: api/Teacher/UpdatedTeacher/20
+        /// POST DATA:
+        /// {"TeacherFname":"Satoru", "TeacherLname":"Gojo", "EmployeeNumber": "T001", "HireDate":"01-08-2025", "Salary":90} ->
+        /// -> {"TeacherID":20, "TeacherFname":"Satoru", "TeacherLname":"Gojo", "EmployeeNumber": "T001", "HireDate":"01-08-2025", "Salary":90}
+        /// </example>
+        [HttpPost(template:"UpdateTeacher/{id}")]
+        public Teacher UpdateTeacher(int id, [FromBody] Teacher UpdatedTeacher)
+        {
+            using (MySqlConnection Conn = _context.AccessDatabase())
+            {
+                // Open the connection to the database
+                Conn.Open();
+                // Write a query
+                string query = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, hiredate=@HireDate, salary=@Salary where teacherid = @id";
+
+                MySqlCommand Command = Conn.CreateCommand();
+                Command.CommandText = query;
+                Command.Parameters.AddWithValue("@TeacherFname", UpdatedTeacher.TeacherFname);
+                Command.Parameters.AddWithValue("@TeacherLname", UpdatedTeacher.TeacherLname);
+                Command.Parameters.AddWithValue("@EmployeeNumber", UpdatedTeacher.EmployeeNumber);
+                Command.Parameters.AddWithValue("@HireDate", UpdatedTeacher.HireDate);
+                Command.Parameters.AddWithValue("@Salary", UpdatedTeacher.Salary);
+                Command.Parameters.AddWithValue("@id", id);
+
+                Command.ExecuteNonQuery();
+            }
+            return SpecificTeacher(id);
+        }
     }
 }

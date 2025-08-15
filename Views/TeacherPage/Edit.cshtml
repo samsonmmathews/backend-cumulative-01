@@ -1,0 +1,33 @@
+﻿@model Backend_Cumulative_01.Models.Teacher
+
+<h2>Editing the Teacher details</h2>
+<form method="POST" action="/TeacherPage/Update/@Model.TeacherId">
+    <div>
+        <label for="TeacherFname">Teacher First Name: </label>
+        <input id="TeacherFname" type="text" name="TeacherFname" value="@Model.TeacherFname"/>
+    </div>
+
+    <div>
+        <label for="TeacherLname">Teacher Last Name: </label>
+        <input id="TeacherLname" type="text" name="TeacherLname" value="@Model.TeacherLname"/>
+    </div>
+
+    <div>
+        <label for="EmployeeNumber">Employee Number: </label>
+        <input id="EmployeeNumber" type="text" name="EmployeeNumber" value="@Model.EmployeeNumber" />
+    </div>
+
+    <div>
+        <label for="HireDate">Hire Date: </label>
+        <input id="HireDate" type="text" name="HireDate" value="@Model.HireDate" />
+    </div>
+
+    <div>
+        <label for="Salary">Salary: </label>
+        <input id="Salary" type="text" name="Salary" value="@Model.Salary" />
+    </div>
+
+    <div>
+        <input type="submit" value="Edit Teacher" />
+    </div>
+</form>

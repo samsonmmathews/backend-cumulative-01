@@ -129,5 +129,41 @@ namespace Backend_Cumulative_01.Controllers
             // Directs to /TeacherPage/List.cshtml
             return RedirectToAction("List");
         }
+
+        // GET: /TeacherPage/Edit/{id} -> A webpage that asks the user what fields of an article to update
+        public IActionResult Edit(int id)
+        {
+            // Given: The teacher id
+            Teacher SelectedTeacher = _api.SpecificTeacher(id);
+            return View(SelectedTeacher);
+        }
+
+        // POST: /TeacherPage/Update/{id}
+        // FORM DATA:
+        // Headers: Content-Type application/x-www-form-urlencoded
+        // TeacherFname={TeacherFname}&TeacherLname={TeacherLname}
+        [HttpPost]
+        public IActionResult Update(int id, string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime HireDate, decimal Salary)
+        {
+            Debug.WriteLine("Teacher" + id);
+            Debug.WriteLine("First name: " + TeacherFname);
+            Debug.WriteLine("Last name: " + TeacherLname);
+            Debug.WriteLine("Employee Number: " + EmployeeNumber);
+            Debug.WriteLine("Hire Date: " + HireDate);
+            Debug.WriteLine("Salary: " + Salary);
+
+            Teacher UpdatedTeacher = new Teacher();
+
+            UpdatedTeacher.TeacherFname = TeacherFname;
+            UpdatedTeacher.TeacherLname = TeacherLname;
+            UpdatedTeacher.EmployeeNumber = EmployeeNumber;
+            UpdatedTeacher.HireDate = HireDate;
+            UpdatedTeacher.Salary = Salary;
+
+            //_api.UpdateTeacher(id, UpdatedTeacher);
+
+            // Redirects to /TeacherPage/Show/{id}
+            return RedirectToAction("Show", new { id = id });
+        }
     }
 }
