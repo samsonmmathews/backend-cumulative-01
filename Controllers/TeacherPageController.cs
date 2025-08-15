@@ -130,7 +130,7 @@ namespace Backend_Cumulative_01.Controllers
             return RedirectToAction("List");
         }
 
-        // GET: /TeacherPage/Edit/{id} -> A webpage that asks the user what fields of an article to update
+        // GET: /TeacherPage/Edit/{id} -> A webpage that asks the user what fields of a teacher to update
         public IActionResult Edit(int id)
         {
             // Given: The teacher id
