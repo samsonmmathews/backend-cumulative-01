@@ -227,12 +227,12 @@ namespace Backend_Cumulative_01.Controllers
         /// The teacher object from the database after the update
         /// </returns>
         /// <example>
-        /// POST: api/Teacher/UpdatedTeacher/20
-        /// POST DATA:
+        /// PUT: api/Teacher/UpdatedTeacher/20
+        /// PUT DATA:
         /// {"TeacherFname":"Satoru", "TeacherLname":"Gojo", "EmployeeNumber": "T001", "HireDate":"01-08-2025", "Salary":90} ->
         /// -> {"TeacherID":20, "TeacherFname":"Satoru", "TeacherLname":"Gojo", "EmployeeNumber": "T001", "HireDate":"01-08-2025", "Salary":90}
         /// </example>
-        [HttpPost(template:"UpdateTeacher/{id}")]
+        [HttpPut(template:"UpdateTeacher/{id}")]
         public Teacher UpdateTeacher(int id, [FromBody] Teacher UpdatedTeacher)
         {
             using (MySqlConnection Conn = _context.AccessDatabase())

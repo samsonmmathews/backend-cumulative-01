@@ -160,7 +160,7 @@ namespace Backend_Cumulative_01.Controllers
             UpdatedTeacher.HireDate = HireDate;
             UpdatedTeacher.Salary = Salary;
 
-            //_api.UpdateTeacher(id, UpdatedTeacher);
+            _api.UpdateTeacher(id, UpdatedTeacher);
 
             // Redirects to /TeacherPage/Show/{id}
             return RedirectToAction("Show", new { id = id });
