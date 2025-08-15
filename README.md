@@ -19,7 +19,7 @@ We are also adding two new files:
 /Views/Teacher/New.cshtml - A View which uses server rendering to display a page that allows for a user to enter a new teacher
 /Views/Teacher/DeleteConfirm.cshtml - A View which uses server rendering to display a “Confirm Delete” page for a teacher from the MySQL Database
 
-# Backend_Cumulative_02
+# Backend_Cumulative_03
 
 We are adding UPDATE functionality in Part 3.
 UPDATE function is used through API and webpage.
